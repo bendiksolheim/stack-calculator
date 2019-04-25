@@ -8,12 +8,6 @@ function assertValidOperation(value) {
   }
 }
 
-function assertMinLength(stack, n) {
-  if (stack.length < n) {
-    throw Error("Stack underflow");
-  }
-}
-
 var operations = {
   "+": (a, b) => a + b,
   "-": (a, b) => a - b,
@@ -28,7 +22,7 @@ class Calculator {
   }
 
   pop() {
-    assertMinLength(this.stack, 1);
+    this.assertMinLength(1);
     return this.stack.pop();
   }
 
@@ -38,7 +32,7 @@ class Calculator {
       this.stack.push(value);
     } else {
       assertValidOperation(value);
-      assertMinLength(this.stack, 2);
+      this.assertMinLength(2);
       this.evaluate(value);
     }
   }
@@ -57,6 +51,12 @@ class Calculator {
       s += this.stack[i] + " ";
     }
     console.log(s);
+  }
+
+  assertMinLength(length) {
+    if (this.stack.length < length) {
+      throw Error("Stack underflow");
+    }
   }
 }
 
